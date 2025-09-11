@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>AI Response Generator</title>
-  
+
   <!-- Improved CSS Styles -->
   <style>
     /* Global Styles */
@@ -12,8 +12,8 @@
       background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
       color: #333;
       display: flex;
-      justify-content: center;
-      align-items: flex-end; /* Align content to the bottom */
+      flex-direction: column;
+      justify-content: flex-end; /* Align content to the bottom */
       height: 100vh;
       margin: 0;
       padding: 0;
@@ -30,6 +30,10 @@
       padding: 2rem;
       text-align: center;
       margin-bottom: 20px; /* Provides space for input at the bottom */
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
     }
 
     /* Heading */
@@ -91,9 +95,18 @@
       font-size: 1.1rem;
       white-space: pre-wrap; /* Preserve formatting */
       color: #444;
-      max-height: 200px; /* Limit the height of the response */
+      max-height: 300px; /* Limit the height of the response */
       overflow-y: auto; /* Enable vertical scrolling */
       text-align: left; /* Align text to the left */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .response .disclaimer {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 10px;
+      font-style: italic;
     }
 
     /* Responsive tweaks */
@@ -116,14 +129,17 @@
   <div class="container">
     <h1>AI Response Generator</h1>
 
+    <!-- Output for the AI response -->
+    <div class="response" id="output">
+      <div class="disclaimer">AI can make mistakes</div>
+      Your AI‑generated response will appear here.
+    </div>
+
     <!-- User input -->
     <textarea id="prompt" placeholder="Type your prompt here..."></textarea>
 
     <!-- Button to trigger response generation -->
     <button id="generate">Generate Response</button>
-
-    <!-- Output for the AI response -->
-    <div class="response" id="output">Your AI‑generated response will appear here.</div>
   </div>
 
   <!-- JavaScript to handle AI Response Generation -->
@@ -143,9 +159,9 @@
         const response = await fetch(apiUrl);
         if (!response.ok) throw new Error(`HTTP error ${response.status}`);
         const text = await response.text();
-        outputEl.textContent = text;
+        outputEl.innerHTML = `<div class="disclaimer">AI can make mistakes</div>` + text;
       } catch (err) {
-        outputEl.textContent = 'Error: ' + err.message;
+        outputEl.innerHTML = `<div class="disclaimer">AI can make mistakes</div>` + 'Error: ' + err.message;
       }
     });
   </script>
