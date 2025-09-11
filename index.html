@@ -194,7 +194,7 @@
       outputEl.textContent = 'Generating...';
 
       try {
-        const apiUrl = 'https://text.pollinations.ai' + encodeURIComponent(promptText);
+        const apiUrl = 'https://text.pollinations.ai/openai?model=claude' + encodeURIComponent(promptText);
         const response = await fetch(apiUrl);
         if (!response.ok) throw new Error(`HTTP error ${response.status}`);
         const text = await response.text();
